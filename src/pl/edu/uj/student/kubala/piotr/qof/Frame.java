@@ -7,12 +7,13 @@ package pl.edu.uj.student.kubala.piotr.qof;// QuickOriginFit - Frame.java
 //---------------------------------------------------------------------
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
 
 public class Frame implements EDTInitializable {
     private JPanel contentPane;
     private JTextArea inputArea;
     private JTextArea outputArea;
-    private JComboBox formatList;
+    private JComboBox<Format> formatList;
     private JButton generateButton;
     private JLabel lineLabel;
     private JFormattedTextField aName;
@@ -20,6 +21,15 @@ public class Frame implements EDTInitializable {
     private JFormattedTextField bName;
     private JFormattedTextField bUnit;
     private JPanel extraOptionsPane;
+    private FrameController controller;
+
+    public Frame(FrameController controller) {
+
+        this.controller = controller;
+        EDTInitManager manager = EDTInitManager.getInstance();
+        manager.registerElement(this);
+        manager.addDependency(this, controller);
+    }
 
     @Override
     public void init() {
@@ -27,6 +37,8 @@ public class Frame implements EDTInitializable {
         aUnit.setFormatterFactory(new TipTextFormatterFactory("jednostka parametru a"));
         bName.setFormatterFactory(new TipTextFormatterFactory("nazwa parametru b"));
         bUnit.setFormatterFactory(new TipTextFormatterFactory("jednostka parametru b"));
+
+        generateButton.setAction(controller.getGenerateAction());
 
         JFrame frame = new JFrame("Frame");
         frame.setContentPane(contentPane);
@@ -48,6 +60,46 @@ public class Frame implements EDTInitializable {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
+    }
+
+    public JComboBox<Format> getFormatList() {
+        return formatList;
+    }
+
+    public JTextArea getInputArea() {
+        return inputArea;
+    }
+
+    public JTextArea getOutputArea() {
+        return outputArea;
+    }
+
+    public JButton getGenerateButton() {
+        return generateButton;
+    }
+
+    public JLabel getLineLabel() {
+        return lineLabel;
+    }
+
+    public JFormattedTextField getaName() {
+        return aName;
+    }
+
+    public JFormattedTextField getaUnit() {
+        return aUnit;
+    }
+
+    public JFormattedTextField getbName() {
+        return bName;
+    }
+
+    public JFormattedTextField getbUnit() {
+        return bUnit;
+    }
+
+    public JPanel getExtraOptionsPane() {
+        return extraOptionsPane;
     }
 
     @Override

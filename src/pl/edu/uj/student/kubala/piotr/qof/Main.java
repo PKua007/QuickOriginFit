@@ -8,14 +8,23 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
-import javax.swing.*;
-
 public class Main {
     public static void main(String[] args) {
         Frame.installLookAndFeel();
-        Frame frame = new Frame();
-        EDTInitManager manager = EDTInitManager.getInstance();
-        manager.registerElement(frame);
-        manager.initElements();
+
+        // Model
+        ComboBoxFormatList formatList = new ComboBoxFormatList();
+        formatList.addFormat(new LatexFormat());
+        ParamInfoList paramInfoList = new DefaultParamInfoList();
+
+        // Controller
+        FrameController controller = new FrameController(formatList, paramInfoList);
+
+        // View
+        Frame frame = new Frame(controller);
+        frame.getFormatList().setModel(formatList);
+
+        // Init
+        EDTInitManager.getInstance().initElements();
     }
 }

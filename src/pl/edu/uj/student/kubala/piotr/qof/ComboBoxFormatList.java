@@ -11,26 +11,7 @@ package pl.edu.uj.student.kubala.piotr.qof;
 import javax.swing.*;
 import javax.swing.event.ListDataListener;
 
-public class ListModelFormatList implements FormatList, ListModel<Format> {
-    @Override
-    public int getSize() {
-        return 0;
-    }
-
-    @Override
-    public Format getElementAt(int index) {
-        return null;
-    }
-
-    @Override
-    public void addListDataListener(ListDataListener l) {
-
-    }
-
-    @Override
-    public void removeListDataListener(ListDataListener l) {
-
-    }
+public class ComboBoxFormatList implements FormatList, ComboBoxModel<Format> {
 
     @Override
     public void addFormat(Format format) {
@@ -60,5 +41,35 @@ public class ListModelFormatList implements FormatList, ListModel<Format> {
     @Override
     public int getFormatIdx(Format format) {
         return 0;
+    }
+
+    @Override
+    public void setSelectedItem(Object anItem) {
+
+    }
+
+    @Override
+    public Object getSelectedItem() {
+        return null;
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
+    @Override
+    public Format getElementAt(int index) {
+        return null;
+    }
+
+    @Override
+    public void addListDataListener(ListDataListener l) {
+
+    }
+
+    @Override
+    public void removeListDataListener(ListDataListener l) {
+
     }
 }

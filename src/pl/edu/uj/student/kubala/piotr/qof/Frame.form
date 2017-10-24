@@ -121,7 +121,9 @@
                     <preferred-size width="10" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <model/>
+                </properties>
               </component>
               <component id="50fb4" class="javax.swing.JButton" binding="generateButton">
                 <constraints>
