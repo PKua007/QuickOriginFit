@@ -8,7 +8,7 @@ package pl.edu.uj.student.kubala.piotr.qof;// QuickOriginFit - Frame.java
 
 import javax.swing.*;
 
-public class Frame {
+public class Frame implements EDTInitializable {
     private JPanel contentPane;
     private JTextArea inputArea;
     private JTextArea outputArea;
@@ -21,11 +21,23 @@ public class Frame {
     private JFormattedTextField bUnit;
     private JPanel extraOptionsPane;
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(Frame::init);
+    @Override
+    public void init() {
+        aName.setFormatterFactory(new TipTextFormatterFactory("nazwa parametru a"));
+        aUnit.setFormatterFactory(new TipTextFormatterFactory("jednostka parametru a"));
+        bName.setFormatterFactory(new TipTextFormatterFactory("nazwa parametru b"));
+        bUnit.setFormatterFactory(new TipTextFormatterFactory("jednostka parametru b"));
+
+        JFrame frame = new JFrame("Frame");
+        frame.setContentPane(contentPane);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setMinimumSize(frame.getSize());
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
-    private static void init() {
+    public static void installLookAndFeel() {
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -36,19 +48,10 @@ public class Frame {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
+    }
 
-        Frame mainFrame = new Frame();
-        mainFrame.aName.setFormatterFactory(new TipTextFormatterFactory("nazwa parametru a"));
-        mainFrame.aUnit.setFormatterFactory(new TipTextFormatterFactory("jednostka parametru a"));
-        mainFrame.bName.setFormatterFactory(new TipTextFormatterFactory("nazwa parametru b"));
-        mainFrame.bUnit.setFormatterFactory(new TipTextFormatterFactory("jednostka parametru b"));
-
-        JFrame frame = new JFrame("Frame");
-        frame.setContentPane(mainFrame.contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setMinimumSize(frame.getSize());
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    @Override
+    public String getEDTInitializableName() {
+        return "Main Frame";
     }
 }
