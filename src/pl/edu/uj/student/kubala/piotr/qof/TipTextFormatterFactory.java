@@ -1,4 +1,4 @@
-// QuickOriginFit - TipTextFormatterFactory.java
+package pl.edu.uj.student.kubala.piotr.qof;// QuickOriginFit - TipTextFormatterFactory.java
 //---------------------------------------------------------------------
 // [opis pliku]
 //---------------------------------------------------------------------

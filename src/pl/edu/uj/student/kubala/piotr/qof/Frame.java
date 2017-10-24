@@ -1,4 +1,4 @@
-// QuickOriginFit - Frame.java
+package pl.edu.uj.student.kubala.piotr.qof;// QuickOriginFit - Frame.java
 //---------------------------------------------------------------------
 // [opis pliku]
 //---------------------------------------------------------------------
