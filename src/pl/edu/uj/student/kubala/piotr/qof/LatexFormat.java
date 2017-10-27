@@ -21,4 +21,9 @@ public class LatexFormat implements Format {
     public JPanel getExtraOptionsPane() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "LaTeX (paczki: siunitx, aligned)";
+    }
 }
