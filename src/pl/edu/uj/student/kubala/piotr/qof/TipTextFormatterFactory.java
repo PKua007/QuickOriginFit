@@ -20,12 +20,12 @@ class TipTextFormatterFactory extends DefaultFormatterFactory
         }
 
         @Override
-        public Object stringToValue(String text) throws ParseException {
+        public Object stringToValue(String text) {
             return text;
         }
 
         @Override
-        public String valueToString(Object value) throws ParseException {
+        public String valueToString(Object value) {
             return value == null || "".equals(value) ? textToShow : value.toString();
         }
 
@@ -34,12 +34,12 @@ class TipTextFormatterFactory extends DefaultFormatterFactory
     private static class TransparentFormatter extends JFormattedTextField.AbstractFormatter {
 
         @Override
-        public Object stringToValue(String text) throws ParseException {
+        public Object stringToValue(String text) {
             return text;
         }
 
         @Override
-        public String valueToString(Object value) throws ParseException {
+        public String valueToString(Object value) {
             return value == null ? "" : value.toString();
         }
 
