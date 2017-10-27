@@ -8,34 +8,43 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
+import java.util.ArrayList;
+
 public class DefaultParamInfoList implements ParamInfoList {
+
+    private ArrayList<ParamInfo> infos = new ArrayList<>();
+
     @Override
     public void addParamInfo(ParamInfo info) {
-
+        if (getParamInfoIdx(info) != -1)
+            throw new IllegalArgumentException(info + " already in list");
+        infos.add(info);
     }
 
     @Override
     public ParamInfo getParamInfo(int i) {
-        return null;
+        return infos.get(i);
     }
 
     @Override
     public int getNumOfParamsInfos() {
-        return 0;
+        return infos.size();
     }
 
     @Override
     public int deleteParamInfo(int i) {
-        return 0;
+        infos.remove(i);
+        return getNumOfParamsInfos();
     }
 
     @Override
     public int deleteParamInfo(ParamInfo info) {
-        return 0;
+        infos.remove(info);
+        return getNumOfParamsInfos();
     }
 
     @Override
     public int getParamInfoIdx(ParamInfo info) {
-        return 0;
+        return infos.indexOf(info);
     }
 }
