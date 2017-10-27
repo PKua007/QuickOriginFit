@@ -7,7 +7,8 @@ package pl.edu.uj.student.kubala.piotr.qof;// QuickOriginFit - Frame.java
 //---------------------------------------------------------------------
 
 import javax.swing.*;
-import java.awt.event.ComponentAdapter;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class Frame implements EDTInitializable {
     private JPanel contentPane;
@@ -39,6 +40,10 @@ public class Frame implements EDTInitializable {
         bUnit.setFormatterFactory(new TipTextFormatterFactory("jednostka parametru b"));
 
         generateButton.setAction(controller.getGenerateAction());
+
+        // Setup listeners
+        final Handler handler = new Handler();
+        formatList.addItemListener(handler);
 
         JFrame frame = new JFrame("Frame");
         frame.setContentPane(contentPane);
@@ -105,5 +110,13 @@ public class Frame implements EDTInitializable {
     @Override
     public String getEDTInitializableName() {
         return "Main Frame";
+    }
+
+    private class Handler implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED)
+                controller.onFormatChange((Format) e.getItem());
+        }
     }
 }
