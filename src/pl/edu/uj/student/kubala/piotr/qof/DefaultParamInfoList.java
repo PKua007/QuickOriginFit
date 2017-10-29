@@ -47,4 +47,11 @@ public class DefaultParamInfoList implements ParamInfoList {
     public int getParamInfoIdx(ParamInfo info) {
         return infos.indexOf(info);
     }
+
+    @Override
+    public String toString() {
+        return "DefaultParamInfoList{" +
+                "infos=" + infos +
+                '}';
+    }
 }

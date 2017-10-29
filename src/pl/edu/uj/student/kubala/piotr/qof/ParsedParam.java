@@ -31,4 +31,12 @@ public class ParsedParam extends ParamInfo {
     public double getError() {
         return error;
     }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public void setError(double error) {
+        this.error = error;
+    }
 }

@@ -12,6 +12,10 @@ public class ParamInfo {
     private String name;
     private String unit;
 
+    public ParamInfo() {
+        this("", "");
+    }
+
     public ParamInfo(String name, String unit) {
         this.name = name;
         this.unit = unit;
@@ -28,5 +32,21 @@ public class ParamInfo {
 
     public String getUnit() {
         return unit;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public String toString() {
+        return "ParamInfo{" +
+                "name='" + name + '\'' +
+                ", unit='" + unit + '\'' +
+                '}';
     }
 }
