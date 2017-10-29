@@ -18,6 +18,13 @@ class InputParserTest {
     private InputParser parser = new InputParser();
     private AbstractList<ParsedParam> parsed;
 
+    private void assertParam(ParsedParam parsedParam1, ParsedParam parsedParam2) {
+        assertEquals(parsedParam1.getName(), parsedParam2.getName());
+        assertEquals(parsedParam1.getUnit(), parsedParam2.getUnit());
+        assertEquals(parsedParam1.getValue(), parsedParam2.getValue());
+        assertEquals(parsedParam1.getError(), parsedParam2.getError());
+    }
+
     @Test
     void emptyParsing() throws ParseException {
         parsed = parser.parse("", new DefaultParamInfoList());
@@ -31,8 +38,8 @@ class InputParserTest {
         list.addParamInfo(new ParamInfo("b", "bunit"));
         parsed = parser.parse("80.6123\t0.5222\n90.6123\t1.5222", list);
         assertEquals(2, parsed.size());
-        assertEquals(new ParsedParam("a", "aunit", 80.6123, 0.5222), parsed.get(0));
-        assertEquals(new ParsedParam("b", "bunit", 90.6123, 1.5222), parsed.get(1));
+        assertParam(new ParsedParam("a", "aunit", 80.6123, 0.5222), parsed.get(0));
+        assertParam(new ParsedParam("b", "bunit", 90.6123, 1.5222), parsed.get(1));
     }
 
     @Test
@@ -42,8 +49,8 @@ class InputParserTest {
         list.addParamInfo(new ParamInfo("b", "bunit"));
         parsed = parser.parse("80.6123\t  0.5222\n90.6123   \t  \t 1.5222\n", list);
         assertEquals(2, parsed.size());
-        assertEquals(new ParsedParam("a", "aunit", 80.6123, 0.5222), parsed.get(0));
-        assertEquals(new ParsedParam("b", "bunit", 90.6123, 1.5222), parsed.get(1));
+        assertParam(new ParsedParam("a", "aunit", 80.6123, 0.5222), parsed.get(0));
+        assertParam(new ParsedParam("b", "bunit", 90.6123, 1.5222), parsed.get(1));
     }
 
     @Test
@@ -53,8 +60,8 @@ class InputParserTest {
         list.addParamInfo(new ParamInfo("b", "bunit"));
         parsed = parser.parse("80.6123\t0.5222\tfoo1\tfoo2\n90.6123\t1.5222\tfoo3\n", list);
         assertEquals(2, parsed.size());
-        assertEquals(new ParsedParam("a", "aunit", 80.6123, 0.5222), parsed.get(0));
-        assertEquals(new ParsedParam("b", "bunit", 90.6123, 1.5222), parsed.get(1));
+        assertParam(new ParsedParam("a", "aunit", 80.6123, 0.5222), parsed.get(0));
+        assertParam(new ParsedParam("b", "bunit", 90.6123, 1.5222), parsed.get(1));
     }
 
     @Test

@@ -43,18 +43,10 @@ public class ParsedParam extends ParamInfo {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        ParsedParam param = (ParsedParam) o;
-        return Double.compare(param.value, value) == 0 &&
-                Double.compare(param.error, error) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(super.hashCode(), value, error);
+    public String toString() {
+        return "ParsedParam{" +
+                "value=" + value +
+                ", error=" + error +
+                "} " + super.toString();
     }
 }
