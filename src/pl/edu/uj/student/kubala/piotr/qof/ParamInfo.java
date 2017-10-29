@@ -8,6 +8,8 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
+import java.util.Objects;
+
 public class ParamInfo {
     private String name;
     private String unit;
@@ -48,5 +50,20 @@ public class ParamInfo {
                 "name='" + name + '\'' +
                 ", unit='" + unit + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ParamInfo paramInfo = (ParamInfo) o;
+        return Objects.equals(name, paramInfo.name) &&
+                Objects.equals(unit, paramInfo.unit);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, unit);
     }
 }

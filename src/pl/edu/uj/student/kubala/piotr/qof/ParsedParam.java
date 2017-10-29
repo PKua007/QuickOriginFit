@@ -8,6 +8,8 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
+import java.util.Objects;
+
 public class ParsedParam extends ParamInfo {
     private double value;
     private double error;
@@ -38,5 +40,21 @@ public class ParsedParam extends ParamInfo {
 
     public void setError(double error) {
         this.error = error;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ParsedParam param = (ParsedParam) o;
+        return Double.compare(param.value, value) == 0 &&
+                Double.compare(param.error, error) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), value, error);
     }
 }

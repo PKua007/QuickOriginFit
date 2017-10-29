@@ -9,6 +9,8 @@
 package pl.edu.uj.student.kubala.piotr.qof;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class DefaultParamInfoList implements ParamInfoList {
 
@@ -46,6 +48,11 @@ public class DefaultParamInfoList implements ParamInfoList {
     @Override
     public int getParamInfoIdx(ParamInfo info) {
         return infos.indexOf(info);
+    }
+
+    @Override
+    public List<ParamInfo> getAllInfos() {
+        return Collections.unmodifiableList(infos);
     }
 
     @Override

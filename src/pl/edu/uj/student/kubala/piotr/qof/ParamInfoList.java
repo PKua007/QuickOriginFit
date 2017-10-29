@@ -8,6 +8,8 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
+import java.util.List;
+
 public interface ParamInfoList
 {
     void addParamInfo(ParamInfo info);
@@ -16,4 +18,5 @@ public interface ParamInfoList
     int deleteParamInfo(int i);
     int deleteParamInfo(ParamInfo info);
     int getParamInfoIdx(ParamInfo info);
+    List<ParamInfo> getAllInfos();
 }
