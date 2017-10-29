@@ -30,8 +30,8 @@ public class InputParser {
                 // Parse doubles
                 double value, error;
                 try {
-                    value = Double.parseDouble(tokens[0]);
-                    error = Double.parseDouble(tokens[1]);
+                    value = Double.parseDouble(tokens[0].replace(',', '.'));
+                    error = Double.parseDouble(tokens[1].replace(',', '.'));
                 } catch (NumberFormatException e) {
                     throw new ParseException();
                 }

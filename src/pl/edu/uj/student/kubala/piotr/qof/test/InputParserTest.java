@@ -106,7 +106,7 @@ class InputParserTest {
     }
 
     @Test
-    void ZeroErrorShouldNotThrow() throws ParseException {
+    void zeroErrorShouldNotThrow() throws ParseException {
         ParamInfoList list = new DefaultParamInfoList();
         list.addParamInfo(new ParamInfo("a", "aunit"));
         list.addParamInfo(new ParamInfo("b", "bunit"));
@@ -114,11 +114,22 @@ class InputParserTest {
     }
 
     @Test
-    void NonPositiveValueShouldNotThrow() throws ParseException {
+    void nonPositiveValueShouldNotThrow() throws ParseException {
         ParamInfoList list = new DefaultParamInfoList();
         list.addParamInfo(new ParamInfo("a", "aunit"));
         list.addParamInfo(new ParamInfo("b", "bunit"));
         parser.parse("0\t6.3\n90.6123\t1.5222", list);
         parser.parse("1.3\t6.3\n-90.6123\t1.5222", list);
+    }
+
+    @Test
+    void commaInDoubleShouldWork() throws ParseException {
+        ParamInfoList list = new DefaultParamInfoList();
+        list.addParamInfo(new ParamInfo("a", "aunit"));
+        list.addParamInfo(new ParamInfo("b", "bunit"));
+        parsed = parser.parse("80,6123\t0,5222\n90,6123\t1,5222", list);
+        assertEquals(2, parsed.size());
+        assertParam(new ParsedParam("a", "aunit", 80.6123, 0.5222), parsed.get(0));
+        assertParam(new ParsedParam("b", "bunit", 90.6123, 1.5222), parsed.get(1));
     }
 }
