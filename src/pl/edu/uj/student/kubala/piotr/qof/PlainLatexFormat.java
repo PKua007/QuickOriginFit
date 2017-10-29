@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class PlainLatexFormat implements Format {
     @Override
     public String generate(ArrayList<ParsedParam> params) {
-        return null;
+        return getClass().getSimpleName() + " " + params;
     }
 
     @Override

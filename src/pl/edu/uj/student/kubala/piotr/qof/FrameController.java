@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class FrameController implements EDTInitializable {
     private FormatList formatList;
@@ -63,6 +64,8 @@ public class FrameController implements EDTInitializable {
 
     private class GenerateAction extends AbstractAction {
 
+        private final InputParser inputParser = new InputParser();
+
         public GenerateAction() {
             super("Generuj");
         }
@@ -70,9 +73,19 @@ public class FrameController implements EDTInitializable {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (selectedFormat != null) {
-                setOutputText("Wprowadzono: " + getInputText() + "\n"
-                        + "Wybrany format: " + formatList.getFormatIdx(selectedFormat) + ": " + selectedFormat + "\n"
-                        + "Lista parametrów: " + paramInfoList.toString());
+                // Try to parse input
+                ArrayList<ParsedParam> params = null;
+                try {
+                    params = inputParser.parse(getInputText(), paramInfoList);
+                } catch (ParseException e1) {
+                    setOutputText("Wystąpił błąd:\n" + e1.getMessage());
+                }
+
+                // If parsed, generate output
+                if (params != null) {
+                    String out = selectedFormat.generate(params);
+                    setOutputText(out);
+                }
             }
         }
     }
