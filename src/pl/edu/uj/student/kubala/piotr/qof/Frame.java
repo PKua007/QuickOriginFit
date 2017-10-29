@@ -9,6 +9,8 @@ package pl.edu.uj.student.kubala.piotr.qof;// QuickOriginFit - Frame.java
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class Frame implements EDTInitializable {
     private JPanel contentPane;
@@ -44,6 +46,10 @@ public class Frame implements EDTInitializable {
         // Setup listeners
         final Handler handler = new Handler();
         formatList.addItemListener(handler);
+        aName.addPropertyChangeListener(handler);
+        aUnit.addPropertyChangeListener(handler);
+        bName.addPropertyChangeListener(handler);
+        bUnit.addPropertyChangeListener(handler);
 
         JFrame frame = new JFrame("Frame");
         frame.setContentPane(contentPane);
@@ -112,11 +118,28 @@ public class Frame implements EDTInitializable {
         return "Main Frame";
     }
 
-    private class Handler implements ItemListener {
+    private class Handler implements ItemListener, PropertyChangeListener {
         @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED)
                 controller.onFormatChange((Format) e.getItem());
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            Object source = evt.getSource();
+            String propertyName = evt.getPropertyName();
+            if ("value".equals(propertyName)) {
+                final String newValue = evt.getNewValue() == null ? "" : (String) evt.getNewValue();
+                if (source == aName)
+                    controller.onParamNameChange(0, newValue);
+                else if (source == aUnit)
+                    controller.onParamUnitChange(0, newValue);
+                else if (source == bName)
+                    controller.onParamNameChange(1, newValue);
+                else if (source == bUnit)
+                    controller.onParamUnitChange(1, newValue);
+            }
         }
     }
 }

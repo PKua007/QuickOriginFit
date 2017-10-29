@@ -13,12 +13,16 @@ import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
 public class Main {
+
+    private static ComboBoxFormatList formatList = null;
+    private static ParamInfoList paramInfoList;
+
     public static void main(String[] args) {
         Frame.installLookAndFeel();
 
         // Model
-        ComboBoxFormatList formatList = new ComboBoxFormatList();
-        ParamInfoList paramInfoList = new DefaultParamInfoList();
+        formatList = new ComboBoxFormatList();
+        paramInfoList = new DefaultParamInfoList();
         Document textInput = new PlainDocument();
         Document textOutput = new PlainDocument();
 
@@ -33,11 +37,14 @@ public class Main {
 
         // Init
         EDTInitManager.getInstance().initElements();
-        SwingUtilities.invokeLater(() -> initModel(formatList));
+        SwingUtilities.invokeLater(Main::initModel);
     }
 
-    public static void initModel(ComboBoxFormatList formatList) {
+    private static void initModel() {
         formatList.addFormat(new FancyLatexFormat());
         formatList.addFormat(new PlainLatexFormat());
+
+        paramInfoList.addParamInfo(new ParamInfo());
+        paramInfoList.addParamInfo(new ParamInfo());
     }
 }

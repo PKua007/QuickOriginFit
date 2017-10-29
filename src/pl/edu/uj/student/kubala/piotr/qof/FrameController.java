@@ -43,8 +43,18 @@ public class FrameController implements EDTInitializable {
     }
 
     public void onFormatChange(Format newFormat) {
-        setOutputText("Zmiana formatu: " + newFormat);
+        appendOutputText("Zmiana formatu: " + newFormat + "\n");
         selectedFormat = newFormat;
+    }
+
+    public void onParamNameChange(int index, String newName) {
+        appendOutputText("Zmiana nazwy: " + index + " " + newName + "\n");
+        paramInfoList.getParamInfo(index).setName(newName);
+    }
+
+    public void onParamUnitChange(int index, String newUnit) {
+        appendOutputText("Zmiana jednostki: " + index + " " + newUnit + "\n");
+        paramInfoList.getParamInfo(index).setUnit(newUnit);
     }
 
     public GenerateAction getGenerateAction() {
@@ -61,7 +71,8 @@ public class FrameController implements EDTInitializable {
         public void actionPerformed(ActionEvent e) {
             if (selectedFormat != null) {
                 setOutputText("Wprowadzono: " + getInputText() + "\n"
-                        + "Wybrany format: " + formatList.getFormatIdx(selectedFormat) + ": " + selectedFormat);
+                        + "Wybrany format: " + formatList.getFormatIdx(selectedFormat) + ": " + selectedFormat + "\n"
+                        + "Lista parametrów: " + paramInfoList.toString());
             }
         }
     }
@@ -71,6 +82,14 @@ public class FrameController implements EDTInitializable {
             textOutput.remove(0, textOutput.getLength());
             textOutput.insertString(0, str, null);
         } catch (BadLocationException e1) {
+            throw new AssertionError();
+        }
+    }
+
+    private void appendOutputText(String str) {
+        try {
+            textOutput.insertString(textOutput.getLength(), str, null);
+        } catch (BadLocationException e) {
             throw new AssertionError();
         }
     }
