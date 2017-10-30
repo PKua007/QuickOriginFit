@@ -46,7 +46,7 @@ public class InputParser {
             if (reader.readLine() != null)
                 throw new ParseException();
         } catch (IOException e) {
-            throw new ParseException();
+            throw new AssertionError();
         }
 
         return parsedParams;
