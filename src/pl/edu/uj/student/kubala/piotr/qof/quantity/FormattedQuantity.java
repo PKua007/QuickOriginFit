@@ -7,7 +7,7 @@
 // (C)PKua, wszystkie prawa zastrzeżone
 //---------------------------------------------------------------------
 
-package pl.edu.uj.student.kubala.piotr.qof.formatting;
+package pl.edu.uj.student.kubala.piotr.qof.quantity;
 
 public class FormattedQuantity implements Cloneable {
 

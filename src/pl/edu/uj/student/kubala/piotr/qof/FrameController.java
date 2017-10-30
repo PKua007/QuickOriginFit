@@ -8,6 +8,8 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
+import pl.edu.uj.student.kubala.piotr.qof.format.Format;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;

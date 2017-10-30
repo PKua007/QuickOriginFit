@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.edu.uj.student.kubala.piotr.qof.ComboBoxFormatList;
-import pl.edu.uj.student.kubala.piotr.qof.Format;
+import pl.edu.uj.student.kubala.piotr.qof.format.Format;
 import pl.edu.uj.student.kubala.piotr.qof.ParsedParam;
 
 import javax.swing.*;

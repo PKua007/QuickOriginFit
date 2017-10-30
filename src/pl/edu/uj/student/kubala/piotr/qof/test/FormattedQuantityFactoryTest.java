@@ -2,9 +2,9 @@ package pl.edu.uj.student.kubala.piotr.qof.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.edu.uj.student.kubala.piotr.qof.formatting.FormattedQuantity;
-import pl.edu.uj.student.kubala.piotr.qof.formatting.FormattedQuantityFactory;
-import pl.edu.uj.student.kubala.piotr.qof.formatting.Quantity;
+import pl.edu.uj.student.kubala.piotr.qof.quantity.FormattedQuantity;
+import pl.edu.uj.student.kubala.piotr.qof.quantity.FormattedQuantityFactory;
+import pl.edu.uj.student.kubala.piotr.qof.quantity.Quantity;
 
 import static org.junit.jupiter.api.Assertions.*;
 // QuickOriginFit - FormattedQuantityFactoryTest.java

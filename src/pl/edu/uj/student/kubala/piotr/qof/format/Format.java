@@ -6,7 +6,9 @@
 // (C)PKua, wszystkie prawa zastrzeżone
 //---------------------------------------------------------------------
 
-package pl.edu.uj.student.kubala.piotr.qof;
+package pl.edu.uj.student.kubala.piotr.qof.format;
+
+import pl.edu.uj.student.kubala.piotr.qof.ParsedParam;
 
 import javax.swing.*;
 import java.util.ArrayList;

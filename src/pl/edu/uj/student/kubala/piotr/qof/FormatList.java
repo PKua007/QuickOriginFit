@@ -8,6 +8,8 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
+import pl.edu.uj.student.kubala.piotr.qof.format.Format;
+
 public interface FormatList {
     void addFormat(Format format);
     Format getFormat(int i);

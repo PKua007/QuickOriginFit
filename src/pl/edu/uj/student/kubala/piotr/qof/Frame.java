@@ -6,6 +6,8 @@ package pl.edu.uj.student.kubala.piotr.qof;// QuickOriginFit - Frame.java
 // (C)PKua, wszystkie prawa zastrzeżone
 //---------------------------------------------------------------------
 
+import pl.edu.uj.student.kubala.piotr.qof.format.Format;
+
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;

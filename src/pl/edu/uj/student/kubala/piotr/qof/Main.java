@@ -8,6 +8,9 @@
 
 package pl.edu.uj.student.kubala.piotr.qof;
 
+import pl.edu.uj.student.kubala.piotr.qof.format.FancyLatexFormat;
+import pl.edu.uj.student.kubala.piotr.qof.format.PlainLatexFormat;
+
 import javax.swing.*;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
