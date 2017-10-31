@@ -102,22 +102,22 @@ public class FormattedQuantityFactory {
         String error;
         String errorDigits;
 
-        if (errorFirstDigitPos > Integer.MIN_VALUE) {      // Którykolwiek z błedów niezerowy
+        if (quantity.getError() > 0) {      // Którykolwiek z błedów niezerowy
             // Pozycja ostatniej niezerowej cyfry - normalnie ostatnia cyfra niepewności, chyba że niepewność
             // większa niż wynik, to pierwsa cyfra wyniku
-            int lastDigitPos = calculateLastDigitPos(valueFirstDigitPos, errorFirstDigitPos);
-            valueDigits = generateDigits(lastDigitPos, quantity.getValue());
-            errorDigits = generateDigits(lastDigitPos, quantity.getError());
+            int lastValueDigitPos = calculateLastValueDigitPos(valueFirstDigitPos, errorFirstDigitPos);
+            int lastErrorDigitPos = calculateLastErrorDigitPos(errorFirstDigitPos);
+            valueDigits = generateDigits(quantity.getValue(), lastValueDigitPos);
+            errorDigits = generateDigits(quantity.getError(), lastErrorDigitPos);
 
-            if (lastDigitPos < 0) {  // Występuje część ułamkowa, bądź kończy się na jednościach
-                value = String.format(ENGLISH_LOCALE, "%." + (-lastDigitPos) + "f", quantity.getValue());
-                error = String.format(ENGLISH_LOCALE, "%." + (-lastDigitPos) + "f", quantity.getError());
+            if (lastValueDigitPos < 0) {  // Występuje część ułamkowa, bądź kończy się na jednościach
+                value = String.format(ENGLISH_LOCALE, "%." + (-lastValueDigitPos) + "f", quantity.getValue());
+                error = String.format(ENGLISH_LOCALE, "%." + (-lastErrorDigitPos) + "f", quantity.getError());
             } else {    // Ostatnia cyfra to cyfra dziesiątek, setek, itd. Trzeba dopisać ileś zer
-                String trailingZeros = generateZeros(lastDigitPos);
                 if (quantity.getValue() < 0)
                     value = "-";
-                value += valueDigits + trailingZeros;
-                error = errorDigits + trailingZeros;
+                value += valueDigits + generateZeros(lastValueDigitPos);
+                error = errorDigits + generateZeros(lastErrorDigitPos);
             }
         } else {        // Oba błedy zerowe - walnij maksymalną dokładność
             value = Double.toString(quantity.getValue());
@@ -137,17 +137,22 @@ public class FormattedQuantityFactory {
         String errorDigits;
         int exponent = valueFirstDigitPos;
 
-        if (errorFirstDigitPos > Integer.MIN_VALUE) {      // Którykolwiek z błedów niezerowy
-            int lastDigitPos = calculateLastDigitPos(valueFirstDigitPos, errorFirstDigitPos);
-            valueDigits = generateDigits(lastDigitPos, quantity.getValue());
-            errorDigits = generateDigits(lastDigitPos, quantity.getError());
+        if (quantity.getError() > 0) {      // Którykolwiek z błedów niezerowy
+            int lastValueDigitPos = calculateLastValueDigitPos(valueFirstDigitPos, errorFirstDigitPos);
+            int lastErrorDigitPos = calculateLastErrorDigitPos(errorFirstDigitPos);
+            valueDigits = generateDigits(quantity.getValue(), lastValueDigitPos);
+            errorDigits = generateDigits(quantity.getError(), lastErrorDigitPos);
             // Liczba cyfr po przecinku do wyświetlenia - taka, żeby była odpowiednia ilość cyfr znaczących większego
             // błędu
             int fractionDigits = calculateFractionDigits(valueFirstDigitPos, errorFirstDigitPos);
-            double factor = Math.pow(10, -exponent);
-
-            value = String.format(ENGLISH_LOCALE, "%." + fractionDigits + "f", quantity.getValue() * factor);
-            error = String.format(ENGLISH_LOCALE, "%." + fractionDigits + "f", quantity.getError() * factor);
+            if (fractionDigits >= 0) {
+                double factor = Math.pow(10, -exponent);
+                value = String.format(ENGLISH_LOCALE, "%." + fractionDigits + "f", quantity.getValue() * factor);
+                error = String.format(ENGLISH_LOCALE, "%." + fractionDigits + "f", quantity.getError() * factor);
+            } else {
+                value = valueDigits;
+                error = errorDigits + generateZeros(-fractionDigits);
+            }
         } else {        // Oba błedy zerowe - walnij maksymalna dokładność
             value = Double.toString(quantity.getValue() * Math.pow(10, -exponent));
             valueDigits = "foo";
@@ -158,15 +163,19 @@ public class FormattedQuantityFactory {
         return new FormattedQuantity(value, valueDigits, error, errorDigits, true, exponent);
     }
 
-    private int calculateLastDigitPos(int valueFirstDigitPos, int errorFirstDigitPos) {
-        return Math.min(valueFirstDigitPos, errorFirstDigitPos - this.errorSignificantDigits + 1);
+    private int calculateLastValueDigitPos(int valueFirstDigitPos, int errorFirstDigitPos) {
+        return Math.min(valueFirstDigitPos, calculateLastErrorDigitPos(errorFirstDigitPos));
+    }
+
+    private int calculateLastErrorDigitPos(int errorFirstDigitPos) {
+        return errorFirstDigitPos - this.errorSignificantDigits + 1;
     }
 
     private int calculateFractionDigits(int valueFirstDigitPos, int errorFirstDigitPos) {
-        return Math.max(0, valueFirstDigitPos - errorFirstDigitPos + this.errorSignificantDigits - 1);
+        return valueFirstDigitPos - errorFirstDigitPos + this.errorSignificantDigits - 1;
     }
 
-    private String generateDigits(int lastDigitPos, double value) {
+    private String generateDigits(double value, int lastDigitPos) {
         return String.format(ENGLISH_LOCALE, "%.0f", Math.abs(value) * Math.pow(10, -lastDigitPos));
     }
 
