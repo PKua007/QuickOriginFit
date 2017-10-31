@@ -82,16 +82,13 @@ public class FormattedQuantityFactory {
      * @return sformatowany pomiar
      */
     public FormattedQuantity format(Quantity quantity) {
-        FormattedQuantity result;
         int valueFirstDigitPos = getSignifOrZero(quantity.getValue());
         int errFirstDigitPos = getSignifOrIntMin(quantity.getError());
 
         if (valueFirstDigitPos > maxFixedExponent || valueFirstDigitPos < minFixedExponent)
-            result = formatScientific(quantity, valueFirstDigitPos, errFirstDigitPos);  // Przedstaw w postaci wykładniczej
+            return formatScientific(quantity, valueFirstDigitPos, errFirstDigitPos);// Przedstaw w postaci wykładniczej
         else
-            result = formatDecimal(quantity, valueFirstDigitPos, errFirstDigitPos);     // Przedstaw w postaci "tradycyjnej"
-
-        return result;
+            return formatDecimal(quantity, valueFirstDigitPos, errFirstDigitPos);// Przedstaw w postaci "tradycyjnej"
     }
 
     /* Pomocnicza metoda formatująca wielkość jako liczbę dziesiętną */
@@ -121,7 +118,7 @@ public class FormattedQuantityFactory {
             }
         } else {        // Oba błedy zerowe - walnij maksymalną dokładność
             value = Double.toString(quantity.getValue());
-            valueDigits = "foo";
+            valueDigits = stripDigits(value);
             error = "0";
             errorDigits = generateZeros(errorSignificantDigits);
         }
@@ -155,12 +152,24 @@ public class FormattedQuantityFactory {
             }
         } else {        // Oba błedy zerowe - walnij maksymalna dokładność
             value = Double.toString(quantity.getValue() * Math.pow(10, -exponent));
-            valueDigits = "foo";
+            valueDigits = stripDigits(value);
             error = "0";
             errorDigits = generateZeros(errorSignificantDigits);
         }
 
         return new FormattedQuantity(value, valueDigits, error, errorDigits, true, exponent);
+    }
+
+    private String stripDigits(String value) {
+        int eIdx = value.indexOf('e');
+        if (eIdx == -1)
+            eIdx = value.indexOf('E');
+        if (eIdx != -1)
+            value = value.substring(0, eIdx);
+        value = value.replace(".", "");
+        if (value.startsWith("-"))
+            value = value.substring(1);
+        return value;
     }
 
     private int calculateLastValueDigitPos(int valueFirstDigitPos, int errorFirstDigitPos) {

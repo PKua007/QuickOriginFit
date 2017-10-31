@@ -138,4 +138,16 @@ class FormattedQuantityFactoryTest {
         format(34.345, 0.9255);
         assertQuantity("34.345", "34345", "0.926", "926", false, 0);
     }
+
+    @Test
+    void zeroErrorDecimal() {
+        format(8.54, 0);
+        assertQuantity("8.54", "854", "0", "00", false, 0);
+    }
+
+    @Test
+    void zeroErrorScientific() {
+        format(7.2344e40, 0);
+        assertQuantity("7.2344", "72344", "0", "00", true, 40);
+    }
 }
